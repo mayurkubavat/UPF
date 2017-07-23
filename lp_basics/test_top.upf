@@ -1,0 +1,41 @@
+upf_version 2.0
+set_design_top test/dut_top
+set_scope .
+
+create_power_domain PD_TOP
+create_power_domain PD_OR  -elements {orGate}
+
+create_supply_port VDD_1d0 -domain PD_TOP
+create_supply_port VDD_0d8 -domain PD_TOP
+create_supply_port VSS     -domain PD_TOP
+
+create_supply_net VDD_1d0 -domain PD_TOP
+create_supply_net VDD_0d8 -domain PD_TOP
+create_supply_net VDD_0d8 -domain PD_OR  -reuse
+
+create_supply_net VSS -domain PD_TOP
+create_supply_net VSS -domain PD_OR  -reuse
+
+# Connect Supply Nets to top level Supply Ports
+connect_supply_net VDD_1d0 -ports VDD_1d0
+connect_supply_net VDD_0d8 -ports VDD_0d8
+connect_supply_net VSS     -ports VSS
+
+create_supply_net VDD_1d0_SW -domain PD_TOP
+
+set_domain_supply_net PD_TOP \
+    -primary_power_net VDD_1d0 \
+    -primary_ground_net VSS
+
+set_domain_supply_net PD_OR \
+    -primary_power_net VDD_0d8 \
+    -primary_ground_net VSS
+
+create_power_switch or_sw \
+    -domain PD_TOP \
+    -output_supply_port {vout_p VDD_1d0_SW} \
+    -input_supply_port {vin_p VDD_1d0} \
+    -control_port {ctrl_p top_pwr_sw} \
+    -on_state {normal_working vin_p {ctrl_p}} \
+    -off_state {off_state {!ctrl_p}}
+
