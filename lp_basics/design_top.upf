@@ -28,7 +28,7 @@ set_domain_supply_net PD_TOP \
     -primary_ground_net VSS
 
 set_domain_supply_net PD_OR \
-    -primary_power_net VDD_0d8 \
+    -primary_power_net VDD_0d8_SW \
     -primary_ground_net VSS
 
 create_power_switch or_sw \
