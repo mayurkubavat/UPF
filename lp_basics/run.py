@@ -19,8 +19,8 @@ def create_lib():
     os.system("vmap work work")
 
 def compile_files():
-    os.system("vlog -work work design_top.v test.sv")
-    os.system("vopt test -pa_upf test_top.upf -pa_lib work -o testO -pa_enable=nonoptimizedflow")
+    os.system("vlog -work work or_gate.v design_top.v test.sv")
+    os.system("vopt -work work test -pa_upf design_top.upf -pa_top \"/test/dut_top\"  -pa_lib work -o testO -pa_enable=nonoptimizedflow")
 
 
 def simulate():

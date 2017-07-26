@@ -59,6 +59,14 @@ module test;
       #10;
       {in1, in2, in3} = 3'b001;
 
+      status = supply_off("/dut_top/VDD_0d8");
+
+      #10;
+      {in1, in2, in3} = 3'b010;
+
+      #10;
+      {in1, in2, in3} = 3'b011;
+
       #100 $finish;
 
    end
